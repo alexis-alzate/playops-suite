@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual Procesos AM - Playtech Help Desk</title>
+  <style>
+    :root {
+      --bg: #f3f7fa;
+      --paper: #ffffff;
+      --ink: #122033;
+      --muted: #607184;
+      --line: #d9e7ef;
+      --brand: #0b5f80;
+      --brand-2: #12a9d6;
+      --soft: #eaf6fb;
+      --soft-2: #f7fbfd;
+      --ok: #eaf8ef;
+      --warn: #fff5da;
+      --danger: #fdecec;
+      --code: #0d1720;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.58;
+    }
+    .shell { max-width: 1120px; margin: 0 auto; padding: 28px; }
+    .document {
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 46px rgba(18, 31, 53, .12);
+    }
+    header {
+      padding: 40px 48px;
+      color: #fff;
+      background:
+        linear-gradient(120deg, rgba(6, 26, 39, .96), rgba(10, 95, 128, .94)),
+        radial-gradient(circle at 82% 10%, rgba(18, 169, 214, .35), transparent 38%);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .mark {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+      color: var(--brand);
+      font-weight: 800;
+      font-size: 22px;
+    }
+    .eyebrow {
+      margin: 0 0 4px;
+      color: #77e5ff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .slogan { margin: 0; color: rgba(255,255,255,.85); font-style: italic; }
+    h1 { margin: 0 0 10px; font-size: 38px; line-height: 1.08; }
+    header p { max-width: 900px; margin: 0; font-size: 17px; opacity: .96; }
+    main { padding: 34px 48px 48px; }
+    nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    nav a {
+      display: block;
+      padding: 12px 14px;
+      color: var(--brand);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft-2);
+      font-weight: 700;
+    }
+    h2 {
+      margin: 34px 0 12px;
+      padding-bottom: 9px;
+      color: var(--brand);
+      border-bottom: 2px solid var(--line);
+      font-size: 23px;
+    }
+    h3 { margin: 22px 0 8px; color: #27364a; font-size: 17px; }
+    p { margin: 8px 0 12px; }
+    ul, ol { padding-left: 24px; }
+    li { margin: 5px 0; }
+    code {
+      padding: 2px 5px;
+      background: #eef3f7;
+      border-radius: 5px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 92%;
+    }
+    pre {
+      overflow-x: auto;
+      padding: 15px 16px;
+      color: #f8fafc;
+      background: var(--code);
+      border-radius: 10px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 14px; }
+    th, td { padding: 11px 12px; border: 1px solid var(--line); vertical-align: top; }
+    th { color: #fff; background: var(--brand); text-align: left; }
+    tr:nth-child(even) td { background: #f8fbfd; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .card h3 { margin-top: 0; }
+    .note { margin: 16px 0; padding: 14px 16px; border-left: 5px solid var(--brand); background: var(--soft); border-radius: 8px; }
+    .warn { border-left-color: #d97706; background: var(--warn); }
+    .danger { border-left-color: #c0392b; background: var(--danger); }
+    .ok { border-left-color: #12805c; background: var(--ok); }
+    .footer { margin-top: 36px; padding-top: 18px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; }
+    @media (max-width: 900px) { nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 700px) {
+      .shell { padding: 0; }
+      .document { border: 0; border-radius: 0; }
+      header, main { padding: 28px 22px; }
+      nav, .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .shell { padding: 0; }
+      .document { border: 0; box-shadow: none; }
+      header { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      nav { display: none; }
+      pre { white-space: pre-wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <article class="document">
+      <header>
+        <div class="brand">
+          <div class="mark">Play</div>
+          <div>
+            <p class="eyebrow">Soporte Playtech</p>
+            <p class="slogan">Apostamos por la tecnolog&iacute;a</p>
+          </div>
+        </div>
+        <h1>Manual operativo - Procesos AM V2</h1>
+        <p>Gu&iacute;a actualizada para instalar y usar la aplicaci&oacute;n interna de monitoreo de procesos LISTO y cargue de rutas.</p>
+      </header>
+
+      <main>
+        <nav aria-label="Contenido">
+          <a href="#resumen">Resumen</a>
+          <a href="#instalacion">Instalaci&oacute;n</a>
+          <a href="#monitoreo">Monitoreo</a>
+          <a href="#cargues">Cargue de rutas</a>
+          <a href="#onedrive">OneDrive</a>
+          <a href="#bitacoras">Bit&aacute;coras</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#diagnostico">Diagn&oacute;stico</a>
+          <a href="#errores">Errores comunes</a>
+          <a href="#checklist">Checklist</a>
+        </nav>
+
+        <section id="resumen">
+          <h2>1. Resumen de la aplicaci&oacute;n</h2>
+          <p><strong>Procesos AM V2</strong> es una aplicaci&oacute;n de escritorio para el equipo de Soporte. Centraliza dos procesos internos:</p>
+          <div class="grid">
+            <div class="card">
+              <h3>Monitoreo procesos LISTO</h3>
+              <p>Valida servidores internos y externos, detecta novedades reales, genera evidencia HTML y resumen para comunicaci&oacute;n del equipo.</p>
+            </div>
+            <div class="card">
+              <h3>Cargue de rutas</h3>
+              <p>Lee el archivo Excel enviado por el cliente, limpia datos, valida errores, genera <code>Listo_creditos.csv</code> y deja bit&aacute;cora del cargue.</p>
+            </div>
+          </div>
+          <div class="note ok">
+            La app no reemplaza el criterio humano. Automatiza limpieza, validaci&oacute;n y generaci&oacute;n de archivos; las diferencias reales deben revisarse con el cliente.
+          </div>
+        </section>
+
+        <section id="instalacion">
+          <h2>2. Instalaci&oacute;n</h2>
+          <ol>
+            <li>Ejecutar el instalador <code>INSTALADOR_PROCESOS_AM_V2.exe</code>.</li>
+            <li>Esperar a que finalice la barra de instalaci&oacute;n.</li>
+            <li>Confirmar que se cre&oacute; el acceso directo en el escritorio.</li>
+            <li>Abrir la aplicaci&oacute;n desde el acceso directo <strong>Procesos AM V2</strong>.</li>
+          </ol>
+          <p>El instalador copia la aplicaci&oacute;n en el perfil del usuario y crea accesos directos. No es necesario instalar Python en los equipos de los compa&ntilde;eros.</p>
+          <div class="note warn">
+            Si Windows bloquea el instalador, usar la opci&oacute;n <strong>Ejecutar de todas formas</strong> solo si el archivo proviene del equipo autorizado de Soporte.
+          </div>
+        </section>
+
+        <section id="monitoreo">
+          <h2>3. Monitoreo procesos LISTO</h2>
+          <p>Este m&oacute;dulo valida la infraestructura de procesos LISTO. Antes de ejecutar, el equipo debe estar conectado a la VPN o red corporativa.</p>
+          <h3>Opciones principales</h3>
+          <table>
+            <thead>
+              <tr><th>Bot&oacute;n</th><th>Uso</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Probar instalaci&oacute;n</td><td>Valida Python interno de la app, acceso a VPN, OneDrive y carpetas necesarias.</td></tr>
+              <tr><td>Primera revisi&oacute;n</td><td>Ejecuta la validaci&oacute;n de la primera revisi&oacute;n del d&iacute;a.</td></tr>
+              <tr><td>Segunda revisi&oacute;n</td><td>Ejecuta la validaci&oacute;n de la segunda revisi&oacute;n.</td></tr>
+              <tr><td>Primera y segunda</td><td>Ejecuta ambas revisiones de forma consecutiva.</td></tr>
+              <tr><td>Abrir &uacute;ltimo resultado</td><td>Abre la &uacute;ltima carpeta generada con la evidencia.</td></tr>
+            </tbody>
+          </table>
+          <h3>Archivos generados</h3>
+          <pre>detalle_monitoreo.html
+resumen_estado.txt
+server 11.html ... server 28.html
+listoaws.html
+listo24clientes.html</pre>
+          <p>El archivo <code>detalle_monitoreo.html</code> contiene la evidencia visual del monitoreo. El archivo <code>resumen_estado.txt</code> contiene el resumen para comunicar el estado.</p>
+          <p>Cuando existan novedades, el detalle del monitoreo las organiza por servidor, base de datos y tipo de alerta para facilitar la revisi&oacute;n.</p>
+          <div class="note">
+            Las novedades configuradas como excepciones normales no se muestran como alerta. Solo deben aparecer novedades reales que requieran revisi&oacute;n.
+          </div>
+        </section>
+
+        <section id="cargues">
+          <h2>4. Cargue de rutas</h2>
+          <p>Este m&oacute;dulo prepara el archivo para cargar cr&eacute;ditos en LISTO. El usuario solo debe subir el archivo del cliente; la plantilla interna ya viene incluida en la aplicaci&oacute;n.</p>
+          <h3>Flujo recomendado</h3>
+          <ol>
+            <li>Entrar al men&uacute; <strong>Cargue de rutas</strong>.</li>
+            <li>Ingresar <strong>Nombre de BD</strong>.</li>
+            <li>Seleccionar si el cargue es <strong>Prueba</strong> o <strong>Producci&oacute;n</strong>.</li>
+            <li>Subir el archivo Excel del cliente.</li>
+            <li>Revisar el mapeo de columnas detectado por la app. Si el archivo viene con otro formato, la app intenta detectar automaticamente encabezados, fila inicial y columnas equivalentes.</li>
+            <li>Usar <strong>Validar datos</strong> para revisar errores, advertencias y duplicados.</li>
+            <li>Corregir datos si el cliente confirma ajustes.</li>
+            <li>Usar <strong>Procesar cargue</strong> para generar el archivo final.</li>
+            <li>Revisar el resumen ejecutivo generado en Excel para control interno.</li>
+          </ol>
+          <h3>Archivo final</h3>
+          <pre>C:\Listo\Listo_creditos.csv</pre>
+          <p>Este es el archivo que se carga en el sistema LISTO.</p>
+          <p>Por cada cargue tambi&eacute;n se genera un resumen ejecutivo en Excel con total de registros, errores, advertencias, responsable, hora, archivo fuente, archivo final y estado de OneDrive/SharePoint.</p>
+
+          <h3>Reglas importantes</h3>
+          <ul>
+            <li>La app limpia tildes, caracteres especiales, puntos y valores con s&iacute;mbolos inesperados.</li>
+            <li>Los archivos del cliente no tienen que venir siempre con el mismo orden de columnas; la app los organiza al formato interno mediante mapeo.</li>
+            <li>Si el cliente env&iacute;a abonos, se usan los abonos informados.</li>
+            <li>Si el cliente no env&iacute;a abonos pero s&iacute; env&iacute;a saldo actual, la app reconstruye el abono necesario para cuadrar el saldo.</li>
+            <li>Si hay clientes repetidos, la app no une registros autom&aacute;ticamente. Se debe confirmar si son cr&eacute;ditos diferentes o datos duplicados.</li>
+            <li>La fecha de pr&oacute;ximo pago puede venir del archivo, calcularse por periodicidad o definirse manualmente para todos o por cliente.</li>
+            <li>Los cargues marcados como <strong>Prueba</strong> pueden eliminarse desde la app.</li>
+          </ul>
+        </section>
+
+        <section id="onedrive">
+          <h2>5. OneDrive y SharePoint</h2>
+          <p>La aplicaci&oacute;n copia resultados en carpetas locales sincronizadas con OneDrive. OneDrive se encarga de subirlos a SharePoint.</p>
+          <p>Para que funcione correctamente:</p>
+          <ul>
+            <li>OneDrive debe estar iniciado con la cuenta corporativa.</li>
+            <li>La biblioteca de SharePoint debe estar sincronizada o agregada como acceso directo a OneDrive.</li>
+            <li>Si OneDrive est&aacute; pausado, la app puede generar el archivo local, pero no se confirmar&aacute; la subida.</li>
+          </ul>
+          <div class="note warn">
+            Si aparece un aviso de que no se encontr&oacute; la carpeta sincronizada, abrir SharePoint y usar <strong>Sincronizar</strong> o <strong>Agregar acceso directo a OneDrive</strong>.
+          </div>
+        </section>
+
+        <section id="bitacoras">
+          <h2>6. Bit&aacute;coras y control</h2>
+          <p>La app registra informaci&oacute;n para trazabilidad del proceso:</p>
+          <table>
+            <thead>
+              <tr><th>Bit&aacute;cora</th><th>Contenido</th><th>Ubicaci&oacute;n</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bit&aacute;cora de monitoreo</td>
+                <td>Fecha, hora, revisi&oacute;n ejecutada, estado y salida del proceso.</td>
+                <td>Carpeta local de logs de la app.</td>
+              </tr>
+              <tr>
+                <td>Bit&aacute;cora de cargues</td>
+                <td>Nombre de BD, tipo de cargue, responsable, equipo, IP, archivo cliente, archivo generado, errores y advertencias.</td>
+                <td>OneDrive/SharePoint cuando est&aacute; sincronizado.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>La bit&aacute;cora no viaja dentro del CSV que se carga a LISTO. Es un control operativo separado.</p>
+        </section>
+
+        <section id="errores">
+          <h2>7. Errores comunes</h2>
+          <table>
+            <thead>
+              <tr><th>Error</th><th>Causa probable</th><th>Acci&oacute;n</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VPN no detectada</td>
+                <td>El equipo no tiene acceso a los servidores internos.</td>
+                <td>Conectar VPN y volver a ejecutar.</td>
+              </tr>
+              <tr>
+                <td>No se encontr&oacute; carpeta OneDrive/SharePoint</td>
+                <td>No est&aacute; sincronizada la biblioteca o se usa otra cuenta.</td>
+                <td>Sincronizar desde SharePoint con la cuenta corporativa.</td>
+              </tr>
+              <tr>
+                <td>El campo num&eacute;rico no puede contener letras</td>
+                <td>El CSV contiene texto en un campo que LISTO espera como n&uacute;mero.</td>
+                <td>Volver a validar el cargue y corregir el campo se&ntilde;alado.</td>
+              </tr>
+              <tr>
+                <td>Fecha pr&oacute;ximo pago menor a la fecha actual</td>
+                <td>El archivo trae una fecha vencida o vac&iacute;a.</td>
+                <td>Usar fecha manual para todos o ajustar por cliente.</td>
+              </tr>
+              <tr>
+                <td>Cliente/documento repetido</td>
+                <td>Puede ser un cliente con varios cr&eacute;ditos o un duplicado real.</td>
+                <td>Confirmar con el cliente antes de generar el archivo final.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="dashboard">
+          <h2>8. Dashboard y controles generales</h2>
+          <p>El <strong>Dashboard</strong> concentra herramientas generales que no pertenecen a un solo proceso.</p>
+          <table>
+            <thead>
+              <tr><th>Control</th><th>Uso</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Historial operativo</td>
+                <td>Muestra la &uacute;ltima revisi&oacute;n de monitoreo, &uacute;ltimo cargue, &uacute;ltimo diagn&oacute;stico y estado de OneDrive.</td>
+              </tr>
+              <tr>
+                <td>Copiar resumen para Teams</td>
+                <td>Copia al portapapeles el &uacute;ltimo <code>resumen_estado.txt</code> con formato listo para pegar en Teams.</td>
+              </tr>
+              <tr>
+                <td>Diagn&oacute;stico</td>
+                <td>Genera un ZIP t&eacute;cnico para revisar fallas en otro equipo.</td>
+              </tr>
+              <tr>
+                <td>Acerca de</td>
+                <td>Muestra versi&oacute;n, equipo, ruta de instalaci&oacute;n, carpeta de logs y salida de LISTO.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="diagnostico">
+          <h2>9. Diagn&oacute;stico para soporte</h2>
+          <p>Desde el <strong>Dashboard</strong> se puede generar un paquete de diagn&oacute;stico cuando la app falle en otro equipo.</p>
+          <h3>Contenido del diagn&oacute;stico</h3>
+          <ul>
+            <li>Versi&oacute;n de la aplicaci&oacute;n.</li>
+            <li>Hostname del equipo.</li>
+            <li>Usuario de Windows.</li>
+            <li>IP local detectada.</li>
+            <li>Estado b&aacute;sico de OneDrive.</li>
+            <li>Rutas clave usadas por la aplicaci&oacute;n.</li>
+            <li>Configuraci&oacute;n local sin secretos.</li>
+            <li>&Uacute;ltimos logs disponibles.</li>
+          </ul>
+          <div class="note ok">
+            El diagn&oacute;stico no incluye archivos originales de clientes ni el CSV final completo.
+          </div>
+        </section>
+
+        <section id="checklist">
+          <h2>10. Checklist antes de entregar</h2>
+          <ul>
+            <li>La app abre desde el acceso directo del escritorio.</li>
+            <li>El bot&oacute;n <strong>Abrir manual</strong> abre este documento.</li>
+            <li>La VPN est&aacute; conectada antes del monitoreo.</li>
+            <li>OneDrive est&aacute; activo y sin pausa.</li>
+            <li>En cargue de rutas se inform&oacute; el <strong>Nombre de BD</strong>.</li>
+            <li>Se seleccion&oacute; correctamente <strong>Prueba</strong> o <strong>Producci&oacute;n</strong>.</li>
+            <li>Los errores bloqueantes fueron corregidos o confirmados.</li>
+            <li>El archivo final qued&oacute; en <code>C:\Listo\Listo_creditos.csv</code>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>11. Instalador oficial</h2>
+          <p>Para instalar en otros equipos se debe usar el archivo:</p>
+          <pre>C:\Automatizaciones\procesoAM\INSTALADOR_PROCESOS_AM_V2.exe</pre>
+          <p>Ese instalador contiene la aplicaci&oacute;n actual y este manual operativo. Al finalizar valida OneDrive, carpeta corporativa sincronizada y permisos de escritura en la carpeta de control.</p>
+        </section>
+
+        <div class="footer">
+          Manual actualizado el 22/07/2026. Aplicaci&oacute;n interna de Soporte Playtech - Procesos AM V2, versi&oacute;n 4.5.
+        </div>
+      </main>
+    </article>
+  </div>
+</body>
+</html>
