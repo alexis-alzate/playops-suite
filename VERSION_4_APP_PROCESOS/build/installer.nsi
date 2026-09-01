@@ -1,6 +1,9 @@
 Unicode True
 !include "MUI2.nsh"
 
+# Resolver archivos y salidas desde VERSION_4_APP_PROCESOS.
+!cd ".."
+
 !ifndef APP_VERSION
   !define APP_VERSION "0.0.0"
 !endif
