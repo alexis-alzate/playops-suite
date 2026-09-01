@@ -25,7 +25,7 @@ $manifest = [ordered]@{
     version = $Version
     fecha = (Get-Date -Format "yyyy-MM-dd")
     instalador = "INSTALADOR_PROCESOS_AM_V2.exe"
-    mensaje = "PlayOps Suite $Version: corrección del monitoreo para clientes migrados a AWS."
+    mensaje = "PlayOps Suite ${Version}: corrección del monitoreo para clientes migrados a AWS."
 }
 $manifest | ConvertTo-Json | Set-Content "release/version.json" -Encoding utf8
 
