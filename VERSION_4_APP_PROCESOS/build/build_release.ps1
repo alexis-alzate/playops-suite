@@ -19,7 +19,7 @@ if (-not (Test-Path "dist/Procesos AM.exe")) {
     throw "PyInstaller no generó dist/Procesos AM.exe"
 }
 
-& "$env:ProgramFiles(x86)\NSIS\makensis.exe" "/DAPP_VERSION=$Version" "build\installer.nsi"
+& "${env:ProgramFiles(x86)}\NSIS\makensis.exe" "/DAPP_VERSION=$Version" "build\installer.nsi"
 
 $manifest = [ordered]@{
     version = $Version
