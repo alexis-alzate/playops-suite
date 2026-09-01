@@ -42,6 +42,21 @@ URLS = [
 SERVIDORES_VPN = [f"172.16.{numero}.7" for numero in range(11, 29)]
 ULTIMA_RUTA_DESTINO = None
 
+# Clientes migrados a AWS que todavía pueden aparecer en la página histórica
+# de su servidor anterior. Se ignoran únicamente en el origen; en listoaws
+# continúan validándose normalmente para no ocultar fallas reales.
+CLIENTES_MIGRADOS_AWS = {
+    ("server 11", "inversionescale"),
+    ("server 11", "practisillas"),
+    ("server 12", "emaus"),
+    ("server 13", "haceleya"),
+    ("server 15", "sycom"),
+    ("server 17", "mujeractiva"),
+    ("server 19", "latandita"),
+    ("server 20", "prestapaxs"),
+    ("server 21", "dongaston"),
+}
+
 PALABRAS_ALERTA = ("sin va", "sin es", "sin po", "sin so")
 DESCRIPCIONES_ALERTA = {
     "sin va": "Sin vales",
@@ -148,6 +163,10 @@ def detectar_alertas(html_content, servidor):
             continue
 
         cliente = normalizar(celdas[1].get_text(strip=True))
+
+        if (normalizar(servidor), cliente) in CLIENTES_MIGRADOS_AWS:
+            continue
+
         proceso_original = celdas[2].get_text(" ", strip=True)
         proceso = normalizar(proceso_original)
 
