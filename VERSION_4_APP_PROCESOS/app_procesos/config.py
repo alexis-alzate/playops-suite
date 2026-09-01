@@ -4,7 +4,7 @@ import sys
 
 APP_NAME = "Procesos AM"
 APP_TITLE = "PlayOps Suite - Playtech Help Desk"
-APP_VERSION = "14.4.5"
+APP_VERSION = "14.4.6"
 
 if getattr(sys, "frozen", False):
     BASE_DIR = Path(sys.executable).resolve().parent
