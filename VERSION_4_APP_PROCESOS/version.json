@@ -1,6 +1,6 @@
 {
-  "version": "14.4.6",
-  "fecha": "2026-09-01",
+  "version": "14.4.7",
+  "fecha": "2026-10-21",
   "instalador": "INSTALADOR_PROCESOS_AM_V2.exe",
-  "mensaje": "PlayOps Suite 14.4.6: corrección del monitoreo para clientes migrados a AWS."
+  "mensaje": "PlayOps Suite 14.4.7: exclusión de las bases de prueba pruebaorca y pruebaorcait en listoaws."
 }
