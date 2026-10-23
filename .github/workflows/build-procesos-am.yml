@@ -34,12 +34,12 @@ jobs:
 
       - name: Compilar actualización
         shell: powershell
-        run: ./VERSION_4_APP_PROCESOS/build/build_release.ps1 -Version "14.4.7"
+        run: ./VERSION_4_APP_PROCESOS/build/build_release.ps1 -Version "14.4.11"
 
       - name: Publicar paquete
         uses: actions/upload-artifact@v4
         with:
-          name: Procesos-AM-14.4.7
+          name: Procesos-AM-14.4.11
           path: VERSION_4_APP_PROCESOS/release/*
           if-no-files-found: error
           retention-days: 30
