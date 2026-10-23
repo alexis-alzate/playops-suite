@@ -1,6 +1,6 @@
 {
-  "version": "14.4.7",
-  "fecha": "2026-10-21",
+  "version": "14.4.11",
+  "fecha": "2026-10-23",
   "instalador": "INSTALADOR_PROCESOS_AM_V2.exe",
-  "mensaje": "PlayOps Suite 14.4.7: exclusión de las bases de prueba pruebaorca y pruebaorcait en listoaws."
+  "mensaje": "PlayOps Suite 14.4.11: exclusión de las bases de prueba pruebaorca y pruebaorcait en listoaws."
 }
