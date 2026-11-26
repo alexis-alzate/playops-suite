@@ -1,6 +1,6 @@
 {
-  "version": "14.4.12",
+  "version": "14.4.13",
   "fecha": "2026-11-26",
   "instalador": "INSTALADOR_PROCESOS_AM_V2.exe",
-  "mensaje": "PlayOps Suite 14.4.12: la base de datos de Listo 24 ahora apunta a listo-o1.listoonline.co."
+  "mensaje": "PlayOps Suite 14.4.13: actualizacion automatica sin asistente y correccion del error python312.dll."
 }

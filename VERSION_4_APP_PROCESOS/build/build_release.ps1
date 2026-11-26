@@ -21,16 +21,19 @@ if (-not (Test-Path "dist/Procesos AM.exe")) {
 
 & "${env:ProgramFiles(x86)}\NSIS\makensis.exe" "/DAPP_VERSION=$Version" "build\installer.nsi"
 
+if (-not (Test-Path "release/INSTALADOR_PROCESOS_AM_V2.exe")) {
+    throw "NSIS no generó el instalador"
+}
+
+$hash = (Get-FileHash "release/INSTALADOR_PROCESOS_AM_V2.exe" -Algorithm SHA256).Hash.ToLower()
+
 $manifest = [ordered]@{
     version = $Version
     fecha = (Get-Date -Format "yyyy-MM-dd")
     instalador = "INSTALADOR_PROCESOS_AM_V2.exe"
-    mensaje = "PlayOps Suite ${Version}: la base de datos de Listo 24 ahora apunta a listo-o1.listoonline.co."
+    sha256 = $hash
+    mensaje = "PlayOps Suite ${Version}: actualizacion automatica sin asistente y correccion del error python312.dll."
 }
 $manifest | ConvertTo-Json | Set-Content "release/version.json" -Encoding utf8
-
-if (-not (Test-Path "release/INSTALADOR_PROCESOS_AM_V2.exe")) {
-    throw "NSIS no generó el instalador"
-}
 
 Get-FileHash "release/INSTALADOR_PROCESOS_AM_V2.exe" -Algorithm SHA256 | Select-Object Algorithm, Hash | Format-List | Out-File "release/SHA256.txt" -Encoding utf8

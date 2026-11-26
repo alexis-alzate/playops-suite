@@ -1,7 +1,10 @@
-﻿import json
+﻿import hashlib
+import json
 import os
+import shutil
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -21,6 +24,7 @@ class UpdateInfo:
     message: str
     manifest_path: Path | None
     installer_path: Path | None
+    installer_sha256: str = ""
 
 
 def check_for_update():
@@ -50,6 +54,7 @@ def check_for_update():
             installer_path=installer_path,
         )
 
+    installer_sha256 = str(data.get("sha256", "")).strip().lower()
     available = _version_tuple(latest_version) > _version_tuple(APP_VERSION)
     return UpdateInfo(
         available=available,
@@ -58,21 +63,83 @@ def check_for_update():
         message=message if available else "La aplicacion ya esta actualizada.",
         manifest_path=manifest_path,
         installer_path=installer_path,
+        installer_sha256=installer_sha256,
     )
 
 
-def launch_update(installer_path):
-    installer = Path(installer_path)
-    if not installer.exists():
-        raise FileNotFoundError(f"No se encontro el instalador de actualizacion:\n{installer}")
+def launch_update(installer_path, expected_sha256=""):
+    """Copia el instalador a una carpeta local, lo verifica y lo lanza en silencio.
 
-    args = [str(installer), "--auto-update", "--launch-after"]
+    - Se copia fuera de OneDrive para no depender de archivos sin descargar.
+    - Si el manifiesto trae sha256 y no coincide, el instalador aun se esta
+      sincronizando (o es de otra version): no se instala nada.
+    - Se lanza con el entorno de PyInstaller limpio para que la app nueva no
+      herede la carpeta temporal _MEI de esta instancia (que se borra al cerrar).
+    """
+    source = Path(installer_path)
+    if not source.exists():
+        raise FileNotFoundError(f"No se encontro el instalador de actualizacion:\n{source}")
+
+    local_installer = _copy_installer_locally(source)
+    expected = str(expected_sha256 or "").strip().lower()
+    if expected and _file_sha256(local_installer) != expected:
+        _remove_quietly(local_installer)
+        raise RuntimeError(
+            "El instalador publicado aun no coincide con la version anunciada.\n"
+            "Probablemente OneDrive todavia esta sincronizando. Intente de nuevo en unos minutos."
+        )
+
+    args = [str(local_installer), "/S", "--auto-update", "--launch-after"]
+    flags = 0
+    if os.name == "nt":
+        flags = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
     subprocess.Popen(
         args,
-        cwd=str(installer.parent),
+        cwd=str(local_installer.parent),
+        env=_clean_pyinstaller_env(),
         close_fds=True,
-        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+        creationflags=flags,
     )
+
+
+def _clean_pyinstaller_env():
+    env = {
+        key: value
+        for key, value in os.environ.items()
+        if key.upper() != "_MEIPASS2" and not key.upper().startswith("_PYI")
+    }
+    env["PYINSTALLER_RESET_ENVIRONMENT"] = "1"
+    return env
+
+
+def _copy_installer_locally(source):
+    target_dir = USER_CONFIG_DIR / "updates"
+    target_dir.mkdir(parents=True, exist_ok=True)
+    target = target_dir / source.name
+    last_error = None
+    for _ in range(5):
+        try:
+            shutil.copyfile(source, target)
+            return target
+        except OSError as error:
+            last_error = error
+            time.sleep(1)
+    raise OSError(f"No se pudo copiar el instalador de actualizacion:\n{source}\n{last_error}")
+
+
+def _file_sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _remove_quietly(path):
+    try:
+        Path(path).unlink()
+    except OSError:
+        pass
 
 
 def find_update_manifest():
