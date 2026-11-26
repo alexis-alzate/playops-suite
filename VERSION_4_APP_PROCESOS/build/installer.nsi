@@ -1,5 +1,8 @@
 Unicode True
 !include "MUI2.nsh"
+!include "FileFunc.nsh"
+!insertmacro GetParameters
+!insertmacro GetOptions
 
 # Resolver archivos y salidas desde VERSION_4_APP_PROCESOS.
 !cd ".."
@@ -31,7 +34,24 @@ VIAddVersionKey "CompanyName" "Play Technologies S.A.S"
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_LANGUAGE "Spanish"
 
+; Actualizacion automatica: la app lo invoca con --auto-update y se instala
+; sin asistente. Sin ese parametro (o sin /S) se muestra el asistente normal.
+Function .onInit
+  ${GetParameters} $R0
+  ClearErrors
+  ${GetOptions} $R0 "--auto-update" $R1
+  IfErrors not_auto_update
+    SetSilent silent
+  not_auto_update:
+FunctionEnd
+
 Section "Procesos AM" SecMain
+  ; En modo silencioso la app anterior puede seguir abierta y bloquear el .exe.
+  IfSilent 0 skip_close_app
+    nsExec::Exec 'taskkill /F /IM "Procesos AM.exe" /FI "USERNAME eq $%USERNAME%"'
+    Pop $0
+    Sleep 2000
+  skip_close_app:
   SetOutPath "$INSTDIR"
   File "dist\Procesos AM.exe"
   WriteRegStr HKCU "Software\Procesos AM" "InstallDir" "$INSTDIR"
@@ -44,6 +64,14 @@ Section "Procesos AM" SecMain
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Procesos AM" "DisplayVersion" "${APP_VERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Procesos AM" "Publisher" "Play Technologies S.A.S"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Procesos AM" "UninstallString" '"$INSTDIR\Desinstalar Procesos AM.exe"'
+  ; Abrir la app nueva con el entorno de PyInstaller limpio. Si el instalador lo
+  ; lanzo la app anterior, heredaria su carpeta temporal _MEI (ya borrada) y
+  ; fallaria con "Failed to load Python DLL python312.dll".
+  System::Call 'Kernel32::SetEnvironmentVariable(t "_MEIPASS2", n) i'
+  System::Call 'Kernel32::SetEnvironmentVariable(t "_PYI_ARCHIVE_FILE", n) i'
+  System::Call 'Kernel32::SetEnvironmentVariable(t "_PYI_APPLICATION_HOME_DIR", n) i'
+  System::Call 'Kernel32::SetEnvironmentVariable(t "_PYI_PARENT_PROCESS_LEVEL", n) i'
+  System::Call 'Kernel32::SetEnvironmentVariable(t "PYINSTALLER_RESET_ENVIRONMENT", t "1") i'
   Exec '"$INSTDIR\Procesos AM.exe"'
 SectionEnd
 
