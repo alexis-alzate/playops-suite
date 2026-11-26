@@ -729,7 +729,7 @@ class DashboardView(tk.Frame):
             return
 
         try:
-            launch_update(info.installer_path)
+            launch_update(info.installer_path, info.installer_sha256)
         except Exception as error:
             messagebox.showerror("Actualizaciones", f"No se pudo iniciar el actualizador:\n\n{error}")
             return
