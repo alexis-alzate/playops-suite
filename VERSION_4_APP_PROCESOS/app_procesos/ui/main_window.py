@@ -717,7 +717,7 @@ class MainWindow(tk.Tk):
             shell,
             text=(
                 "Hay una version mas reciente de PlayOps Suite. "
-                "La app se cerrara, mostrara el progreso de actualizacion y se abrira de nuevo al finalizar."
+                "La app se cerrara, se actualizara automaticamente y se abrira de nuevo en unos segundos."
             ),
             bg=COLORS["panel"],
             fg=COLORS["muted"],
@@ -763,7 +763,7 @@ class MainWindow(tk.Tk):
             try:
                 if info.installer_path is None:
                     raise FileNotFoundError("El version.json no define el instalador.")
-                launch_update(info.installer_path)
+                launch_update(info.installer_path, info.installer_sha256)
             except Exception as error:
                 modal.destroy()
                 messagebox.showerror("Actualizacion", f"No se pudo iniciar la actualizacion:\n\n{error}")
