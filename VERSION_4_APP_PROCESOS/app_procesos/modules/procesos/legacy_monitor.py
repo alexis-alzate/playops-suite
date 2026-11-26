@@ -37,7 +37,7 @@ URLS = [
     "http://172.16.27.7/ProcesosListo/procesos2.html",
     "http://172.16.28.7/ProcesosListo/procesos2.html",
     "https://listo-interno.listoonline.co/ProcesosListo/procesos2.html",
-    "https://listo24clientes.listoonline.co/ProcesosListo/procesos2.html",
+    "https://listo-o1.listoonline.co/ProcesosListo/procesos2.html",
 ]
 SERVIDORES_VPN = [f"172.16.{numero}.7" for numero in range(11, 29)]
 ULTIMA_RUTA_DESTINO = None
@@ -144,7 +144,7 @@ def obtener_nombre_servidor(url):
         return f"server {url.split('.')[2]}"
     if "listo-interno" in url:
         return "listoaws"
-    if "listo24clientes" in url:
+    if "listo-o1" in url or "listo24clientes" in url:
         return "listo24clientes"
     return "desconocido"
 
@@ -156,7 +156,7 @@ def obtener_linea_servidor(url):
         return f"Servidor Listo {numero} IP: <b>{dominio}</b>"
     if "listo-interno" in dominio:
         return "Servidor Listo AWS: <b>listo-interno</b>"
-    if "listo24clientes" in dominio:
+    if "listo-o1" in dominio or "listo24clientes" in dominio:
         return "Servidor Listo 24 Clientes: <b>listo24clientes</b>"
     return f"Servidor: <b>{dominio}</b>"
 
